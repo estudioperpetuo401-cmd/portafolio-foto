@@ -1,13 +1,17 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Forzamos el modo standalone para optimizar el peso
+  // Optimizacion para reducir peso
   output: 'standalone',
   
   experimental: {
     outputFileTracingExcludes: {
       '*': [
         './public/uploads/**/*',
-        'public/uploads/**/*',  // Agregamos versión sin punto por seguridad
+        'public/uploads/**/*',
         './node_modules/@swc/**/*',
         './node_modules/esbuild/**/*'
       ],
@@ -18,4 +22,5 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// Aqui envolvemos la configuracion con el plugin de idiomas
+export default withNextIntl(nextConfig);
