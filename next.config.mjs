@@ -1,18 +1,21 @@
-import createNextIntlPlugin from 'next-intl/plugin';
-
-// AQUI ESTA LA SOLUCION: Le damos la ruta exacta
-const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Forzamos el modo standalone para optimizar el peso
+  output: 'standalone',
+  
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': [
+        './public/uploads/**/*',
+        'public/uploads/**/*',  // Agregamos versión sin punto por seguridad
+        './node_modules/@swc/**/*',
+        './node_modules/esbuild/**/*'
+      ],
+    },
+  },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    unoptimized: true, 
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;
