@@ -1,0 +1,70 @@
+{
+    "Nav": {
+        "home": "Home",
+        "portfolio": "Portfolio",
+        "about": "About",
+        "contact": "Contact",
+        "categories": {
+            "social": "Social",
+            "fashion": "Fashion",
+            "portrait": "Portrait",
+            "product": "Product",
+            "advertising": "Advertising",
+            "move": "Move"
+        }
+    },
+    "About": {
+        "essence": "Our Essence",
+        "title": "Crafting timeless <italic>visual poetry</italic> since 2012.",
+        "bio1": "Founded in 2012, Estudio Perpetuo 401 is more than just a photography company. It is a creative sanctuary where light meets emotion. We specialize in commercial, architectural, and editorial photography with a relentless focus on minimalism and high-end detail.",
+        "bio2": "Our philosophy is simple: strip away the noise until only the soul of the subject remains. Whether it's a high-jewelry campaign or a minimalist architectural structure, we approach every frame with artistic precision and deep-rooted passion.",
+        "cta": "Learn about our process"
+    },
+    "Contact": {
+        "title": "Let's build <italic>something</italic> great.",
+        "description": "Available for international commissions. Reach out for collaborations, inquiries, or just to say hello.",
+        "email": "Email",
+        "phone": "Phone",
+        "studio": "Studio",
+        "form": {
+            "name": "Name",
+            "name_placeholder": "Your Name",
+            "email": "Email",
+            "email_placeholder": "your@email.com",
+            "session_type": "Session Type",
+            "message": "Message",
+            "message_placeholder": "Tell us about your project...",
+            "submit": "Send Inquiry",
+            "options": {
+                "editorial": "Editorial",
+                "architectural": "Architectural",
+                "commercial": "Commercial",
+                "personal": "Personal Project"
+            }
+        }
+    },
+    "Footer": {
+        "rights": "All rights reserved.",
+        "tagline": "Crafting visual stories"
+    },
+    "Categories": {
+        "social": "Social",
+        "fashion": "Fashion",
+        "portrait": "Portrait",
+        "product": "Product",
+        "advertising": "Advertising",
+        "intimate": "Intimate Portrait",
+        "move": "Move"
+    },
+    "HomePage": {
+        "Categories": {
+            "social": "Social",
+            "fashion": "Fashion",
+            "portrait": "Portrait",
+            "product": "Product",
+            "advertising": "Advertising",
+            "intimate": "Intimate\nPortrait",
+            "move": "Move"
+        }
+    }
+}

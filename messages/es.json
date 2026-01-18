@@ -1,0 +1,70 @@
+{
+    "Nav": {
+        "home": "Inicio",
+        "portfolio": "Portafolio",
+        "about": "Sobre Mí",
+        "contact": "Contacto",
+        "categories": {
+            "social": "Social",
+            "fashion": "Moda",
+            "portrait": "Retrato",
+            "product": "Producto",
+            "advertising": "Publicidad",
+            "move": "Move"
+        }
+    },
+    "About": {
+        "essence": "Nuestra Esencia",
+        "title": "Creando <italic>poesía visual</italic> atemporal desde 2012.",
+        "bio1": "Fundado en 2012, Estudio Perpetuo 401 es más que una empresa de fotografía. Es un santuario creativo donde la luz se encuentra con la emoción. Nos especializamos en fotografía comercial, arquitectónica y editorial con un enfoque implacable en el minimalismo y el detalle de alta gama.",
+        "bio2": "Nuestra filosofía es simple: eliminar el ruido hasta que solo quede el alma del sujeto. Ya sea una campaña de alta joyería o una estructura arquitectónica minimalista, abordamos cada fotograma con precisión artística and una pasión profundamente arraigada.",
+        "cta": "Conoce nuestro proceso"
+    },
+    "Contact": {
+        "title": "Construyamos <italic>algo</italic> grande.",
+        "description": "Disponible para comisiones internacionales. Contáctanos para colaboraciones, consultas o simplemente para decir hola.",
+        "email": "Correo",
+        "phone": "Teléfono",
+        "studio": "Estudio",
+        "form": {
+            "name": "Nombre",
+            "name_placeholder": "Tu Nombre",
+            "email": "Correo",
+            "email_placeholder": "tu@email.com",
+            "session_type": "Tipo de Sesión",
+            "message": "Mensaje",
+            "message_placeholder": "Cuéntanos sobre tu proyecto...",
+            "submit": "Enviar Consulta",
+            "options": {
+                "editorial": "Editorial",
+                "architectural": "Arquitectónica",
+                "commercial": "Comercial",
+                "personal": "Proyecto Personal"
+            }
+        }
+    },
+    "Footer": {
+        "rights": "Todos los derechos reservados.",
+        "tagline": "Creando historias visuales"
+    },
+    "Categories": {
+        "social": "Social",
+        "fashion": "Moda",
+        "portrait": "Retrato",
+        "product": "Producto",
+        "advertising": "Publicidad",
+        "intimate": "Retrato\nÍntimo",
+        "move": "Move"
+    },
+    "HomePage": {
+        "Categories": {
+            "social": "Social",
+            "fashion": "Moda",
+            "portrait": "Retrato",
+            "product": "Producto",
+            "advertising": "Publicidad",
+            "intimate": "Retrato\nÍntimo",
+            "move": "Move"
+        }
+    }
+}
