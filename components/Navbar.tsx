@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -39,12 +39,22 @@ const Navbar = () => {
         return pathname === localizedPath;
     };
 
+    // Prevent scrolling when mobile menu is open
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+    }, [mobileMenuOpen]);
+
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white h-28 border-b border-gray-100 px-6 md:px-12 flex items-center">
+        // FIX 1: Increased z-index to 100 to ensure it stays above the sticky sub-menu
+        <nav className="fixed top-0 left-0 w-full z-[100] bg-white/95 backdrop-blur-sm h-28 border-b border-gray-100 px-6 md:px-12 flex items-center">
             <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
                 {/* Left: Logo */}
-                <Link href={`/${locale}`}>
-                    <div className="relative w-[240px] h-[80px]">
+                <Link href={`/${locale}`} className="relative z-[102]">
+                    <div className="relative w-[180px] md:w-[240px] h-[60px] md:h-[80px]">
                         <Image
                             src="/logo.png"
                             alt="Estudio Perpetuo 401 Logo"
@@ -119,7 +129,8 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Toggle */}
-                <div className="md:hidden flex items-center space-x-4">
+                {/* FIX 2: Ensure the toggle button is above everything with z-[102] */}
+                <div className="md:hidden flex items-center space-x-4 relative z-[102]">
                     <LanguageSwitcher />
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -130,38 +141,40 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: "-100%" }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: "-100%" }}
-                        className="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center space-y-8"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        // FIX 3: Fixed full screen, high Z-index, scrollable if content is tall
+                        className="fixed inset-0 bg-white z-[101] flex flex-col pt-32 px-6 overflow-y-auto"
                     >
-                        <button
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="absolute top-8 right-8 text-3xl text-black"
-                        >
-                            <HiX />
-                        </button>
-                        <Link href={`/${locale}`} onClick={() => setMobileMenuOpen(false)}>
-                            <span className="text-2xl uppercase tracking-[0.3em] font-light">{t("home")}</span>
-                        </Link>
-                        <div className="flex flex-col items-center space-y-4">
-                            <span className="text-xs uppercase tracking-widest text-gray-400">{t("portfolio")}</span>
-                            {portfolioLinks.map(link => (
-                                <Link key={link.name} href={link.href} onClick={() => setMobileMenuOpen(false)}>
-                                    <span className="text-lg uppercase tracking-widest">{link.name}</span>
-                                </Link>
-                            ))}
+                        <div className="flex flex-col items-center space-y-8 pb-10">
+                            <Link href={`/${locale}`} onClick={() => setMobileMenuOpen(false)}>
+                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t("home")}</span>
+                            </Link>
+                            
+                            {/* Portfolio Section in Mobile */}
+                            <div className="flex flex-col items-center space-y-4 w-full border-t border-b border-gray-100 py-6">
+                                <span className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">{t("portfolio")}</span>
+                                {portfolioLinks.map(link => (
+                                    <Link key={link.name} href={link.href} onClick={() => setMobileMenuOpen(false)}>
+                                        <span className="text-base uppercase tracking-widest hover:text-gray-500 transition-colors">
+                                            {link.name}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            <Link href={`/${locale}/about`} onClick={() => setMobileMenuOpen(false)}>
+                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t("about")}</span>
+                            </Link>
+                            <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
+                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t("contact")}</span>
+                            </Link>
                         </div>
-                        <Link href={`/${locale}/about`} onClick={() => setMobileMenuOpen(false)}>
-                            <span className="text-2xl uppercase tracking-[0.3em] font-light">{t("about")}</span>
-                        </Link>
-                        <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
-                            <span className="text-2xl uppercase tracking-[0.3em] font-light">{t("contact")}</span>
-                        </Link>
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -18,7 +18,7 @@ interface CategoryPageBaseProps {
 }
 
 // =====================================================================
-// 📝 MANIFIESTO DE FOTOS (Lista Manual Actualizada con Social)
+// 📝 MANIFIESTO DE FOTOS (Lista Completa)
 // =====================================================================
 const PHOTO_MANIFEST: Record<string, string[]> = {
     social: [
@@ -212,7 +212,7 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
 export default async function CategoryPageBase({ category, locale }: CategoryPageBaseProps) {
     const t = await getTranslations("Categories");
 
-    // Global category order
+    // Orden global de categorías
     const categories = ["social", "fashion", "portrait", "move", "product", "advertising", "intimate"];
 
     let photos: Photo[] = [];
@@ -250,15 +250,22 @@ export default async function CategoryPageBase({ category, locale }: CategoryPag
         errorMsg = "Error al cargar";
     }
 
+    // =================================================================
+    // CORRECCIÓN MÓVIL APLICADA AQUÍ ABAJO
+    // =================================================================
     return (
-        <div className="min-h-screen bg-white text-black pt-36">
-            {/* Sub-navigation */}
-            <div className="border-b border-gray-100 pb-8 overflow-x-auto scrollbar-hide">
-                <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-center space-x-8 md:space-x-12">
+        <div className="min-h-screen bg-white text-black pt-28 md:pt-36">
+            {/* SUB-NAVEGACIÓN MEJORADA PARA MÓVIL:
+               - sticky top-[60px]: Se pega arriba al bajar.
+               - justify-start: Permite scroll horizontal sin cortar texto.
+               - w-max: Forza el ancho para que quepan todos los items.
+            */}
+            <div className="sticky top-[60px] md:top-[80px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-4 md:pb-8 overflow-x-auto scrollbar-hide w-full">
+                <div className="min-w-full w-max md:w-full max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-start md:justify-center space-x-6 md:space-x-12">
                     {categories.map((cat) => (
                         <Link key={cat} href={`/${locale}/portfolio/${cat}`}>
                             <span className={cn(
-                                "text-[10px] uppercase tracking-[0.3em] transition-all cursor-pointer",
+                                "text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] transition-all cursor-pointer whitespace-nowrap",
                                 category === cat
                                     ? "font-bold border-b border-black pb-1"
                                     : "text-gray-400 hover:text-black"
@@ -270,8 +277,8 @@ export default async function CategoryPageBase({ category, locale }: CategoryPag
                 </div>
             </div>
 
-            {/* Main Content Area */}
-            <div className="w-full">
+            {/* Contenido Principal */}
+            <div className="w-full relative z-0">
                 {errorMsg ? (
                     <div className="px-6 md:px-12 py-20 text-center">
                         <p className="text-gray-400 uppercase tracking-widest text-sm font-light italic">
