@@ -18,9 +18,43 @@ interface CategoryPageBaseProps {
 }
 
 // =====================================================================
-// 📝 MANIFIESTO DE FOTOS (Lista Manual)
+// 📝 MANIFIESTO DE FOTOS (Lista Manual Actualizada con Social)
 // =====================================================================
 const PHOTO_MANIFEST: Record<string, string[]> = {
+    social: [
+        "_15S0192.JPG",
+        "_15S0195.JPG",
+        "_15S0275.JPG",
+        "_ATH0001.jpg",
+        "_ATH0010.jpg",
+        "_ATH0019.jpg",
+        "_ATH0034.jpg",
+        "_ATH0178.jpg",
+        "_ATH0271.jpg",
+        "_ATH0343.jpg",
+        "_ATH0344.jpg",
+        "_ATH0345.jpg",
+        "_ATH0429.jpg",
+        "_DUL4056.jpg",
+        "_DUL4369.jpg",
+        "_DUL4373.jpg",
+        "_ESS0004.jpg",
+        "_ESS0006.jpg",
+        "_ESS0009.JPG",
+        "_ESS0096.jpg",
+        "_ESS0099.jpg",
+        "_ESS00992.JPG",
+        "_ESS0244.JPG",
+        "_ESS0289.jpg",
+        "_ESS0370.JPG",
+        "_JDM9593.jpg",
+        "_MG_0052.jpg",
+        "_MG_0097.jpg",
+        "_MG_0181.jpg",
+        "_MG_9445.jpg",
+        "_MG_9703.jpg",
+        "_MG_9724.jpg"
+    ],
     fashion: [
         "_ATH0073_2.jpg",
         "_ATH0191.JPG",
@@ -172,8 +206,7 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_VAL0153.JPG",
         "_VAL0183.JPG",
         "_VAL0625.jpg"
-    ],
-    social: [] // No enviaste lista de Social, queda vacío por ahora.
+    ]
 };
 
 export default async function CategoryPageBase({ category, locale }: CategoryPageBaseProps) {
@@ -186,7 +219,6 @@ export default async function CategoryPageBase({ category, locale }: CategoryPag
     let errorMsg = "";
 
     try {
-        // Obtenemos la lista de la categoría actual (usando minúsculas para coincidir con la URL)
         const imageFiles = PHOTO_MANIFEST[category.toLowerCase()] || [];
 
         if (imageFiles.length === 0) {
@@ -204,7 +236,6 @@ export default async function CategoryPageBase({ category, locale }: CategoryPag
 
                 return {
                     id: index,
-                    // Aseguramos que la URL use el nombre de carpeta correcto
                     url: `/uploads/${category}/${file}`, 
                     alt: formattedTitle,
                     width: 1000, 

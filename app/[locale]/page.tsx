@@ -1,31 +1,33 @@
 import CategoryBanner, { CategoryItem } from "@/components/CategoryBanner";
-import fs from "fs";
-import path from "path";
 import { getTranslations } from "next-intl/server";
+
+// =====================================================================
+// 🖼️ IMÁGENES DE PORTADA (Selección Manual)
+// Aquí definimos qué foto aparecerá como portada en el Home para cada categoría.
+// He puesto la primera de cada lista, pero puedes cambiar el nombre si prefieres otra.
+// =====================================================================
+const COVER_IMAGES: Record<string, string> = {
+    social: "_15S0192.JPG",
+    fashion: "_ATH0073_2.jpg",
+    portrait: "_ATH00.jpg",
+    move: "0546.jpg",
+    product: "Arabesque 202500642.jpg",
+    advertising: "_BAM1698.jpg",
+    intimate: "_01.jpg"
+};
 
 export default async function Home() {
     const t = await getTranslations("Categories");
     const slugs = ["social", "fashion", "portrait", "move", "product", "advertising", "intimate"];
 
     const categories: CategoryItem[] = slugs.map((slug) => {
-        const directory = path.join(process.cwd(), "public", "uploads", slug);
-        let coverImage = "/logo.png"; // Placeholder default
-
-        try {
-            if (fs.existsSync(directory)) {
-                const files = fs.readdirSync(directory);
-                const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".avif"];
-                const firstImage = files.find(file =>
-                    imageExtensions.includes(path.extname(file).toLowerCase())
-                );
-
-                if (firstImage) {
-                    coverImage = `/uploads/${slug}/${firstImage}`;
-                }
-            }
-        } catch (err) {
-            console.error(`Error scanning covers for ${slug}:`, err);
-        }
+        // Buscamos el nombre de la foto en nuestra lista manual
+        const fileName = COVER_IMAGES[slug];
+        
+        // Si existe foto, creamos la ruta completa. Si no, usamos el logo.
+        const coverImage = fileName 
+            ? `/uploads/${slug}/${fileName}` 
+            : "/logo.png";
 
         return {
             id: slug,
