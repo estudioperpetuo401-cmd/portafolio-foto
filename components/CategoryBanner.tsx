@@ -19,27 +19,21 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({ categories }) => {
     const locale = useLocale();
 
     return (
-        <div className="w-full pb-20">
-            {/* CORRECCIÓN DE ESTILO:
-               1. Quitamos 'max-w-7xl mx-auto px-6' para que las fotos toquen los bordes de la pantalla (Full Width).
-               2. Usamos 'flex flex-col' para que sea una lista vertical (franjas), no una cuadrícula.
-            */}
-            <div className="flex flex-col w-full">
-                {categories.map((category) => (
-                    <CategoryCard key={category.id} category={category} locale={locale} />
-                ))}
-            </div>
+        <div className="w-full h-screen md:h-[85vh] flex flex-col md:flex-row bg-white">
+            {categories.map((category) => (
+                <CategoryCard key={category.id} category={category} locale={locale} />
+            ))}
         </div>
     );
 };
 
 // =====================================================
-// 🎬 TARJETA TIPO "FRANJA" (Banner Ancho)
+// 🎬 TARJETA VERTICAL (Columna)
 // =====================================================
 const CategoryCard = ({ category, locale }: { category: CategoryItem, locale: string }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    // Animación de cambio de foto (1 segundo)
+    // Animación de cambio de foto (Slideshow de 1 segundo)
     useEffect(() => {
         if (category.images.length <= 1) return;
 
@@ -52,12 +46,16 @@ const CategoryCard = ({ category, locale }: { category: CategoryItem, locale: st
         return () => clearInterval(interval);
     }, [category.images.length]);
 
+    // Extraemos la inicial (Ej: "F" de "Fashion")
+    const initial = category.title.charAt(0);
+
     return (
-        // Altura ajustada: h-[250px] en móvil y h-[450px] en PC para que se vea panorámico
-        <Link href={`/${locale}/portfolio/${category.id}`} className="relative block w-full h-[250px] md:h-[450px] overflow-hidden group">
-            
-            {/* Imágenes de fondo */}
-            <div className="absolute inset-0 w-full h-full bg-gray-100">
+        <Link 
+            href={`/${locale}/portfolio/${category.id}`} 
+            className="relative flex-1 group overflow-hidden border-b md:border-b-0 md:border-r border-gray-100 last:border-0 min-h-[15vh] md:min-h-0"
+        >
+            {/* 1. SLIDESHOW DE FONDO */}
+            <div className="absolute inset-0 w-full h-full bg-gray-200">
                 {category.images.map((src, index) => (
                     <div
                         key={src}
@@ -69,21 +67,29 @@ const CategoryCard = ({ category, locale }: { category: CategoryItem, locale: st
                             src={src}
                             alt={category.title}
                             fill
-                            className="object-cover" // Esto asegura que la foto llene la franja sin deformarse
-                            priority={true}
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 20vw, 15vw"
+                            priority={index === 0}
                         />
                     </div>
                 ))}
             </div>
 
-            {/* Capa oscura suave */}
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors z-20 duration-300" />
+            {/* 2. CAPA OSCURA (Se oscurece más al pasar el mouse) */}
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-500 z-20" />
 
-            {/* Texto Centrado */}
-            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-                <h2 className="text-white text-3xl md:text-5xl font-light tracking-[0.4em] uppercase drop-shadow-lg text-center px-4">
+            {/* 3. TEXTO (Efecto Inicial -> Nombre Completo) */}
+            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none p-2">
+                
+                {/* La Inicial (Visible por defecto, desaparece en hover) */}
+                <span className="text-white text-5xl md:text-7xl font-light opacity-100 transform group-hover:opacity-0 group-hover:scale-110 transition-all duration-500 ease-out absolute">
+                    {initial}
+                </span>
+
+                {/* El Nombre Completo (Invisible por defecto, aparece en hover) */}
+                <span className="text-white text-xl md:text-2xl tracking-[0.3em] uppercase opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out text-center">
                     {category.title}
-                </h2>
+                </span>
             </div>
         </Link>
     );
