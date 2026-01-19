@@ -42,7 +42,7 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_SPI0844.jpg"
     ],
     portrait: [
-        "_ATH00.jpg", "_ATH0036.jpg", "_ATH0065.jpg", "_ATH0132.jpg", "_ATH0293.jpg", "_ATH0333.jpg", "_ATH0334.jpg",
+        "_ATH00.jpg", "_ATH0036.jpg", "_ATH0065.jpg", "_ATH0132.jpg", "_ATH0293.jpg", "_ATH0333.jpg",
         "_BMA0112.jpg",
         "_CAT1162.jpg", "_CAT4390.jpg", "_CAT6625.jpg",
         "_DSC0185.jpg", "_DSC1010.jpg", "_DSC6674.jpg", "_DSC6840.jpg", "_DSC6889.jpg",
@@ -52,8 +52,8 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
     ],
     move: [
         "_BMA0058.jpg",
-        "_COP0294.jpg", "_COP0296.jpg", "_COP0694.jpg", "_COP1144.jpg", "_COP1147.jpg",
-        "_DSC0635.jpg", "_DSC0649.jpg", "_DSC3318.jpg", "_DSC3600.jpg", "_DSC3684.jpg", "_DSC3799.jpg", "_DSC4621.jpg", "_DSC5112.jpg", "_DSC5218BW.jpg", "_DSC5277.jpg", "_DSC5413.jpg", "_DSC5442.jpg", "_DSC5493.jpg", "_DSC5494.jpg", "_DSC6985.jpg", "_DSC6986.jpg",
+        "_COP0294.jpg", "_COP0296.jpg", "_COP0694.jpg", "_COP1147.jpg",
+        "_DSC0635.jpg", "_DSC0649.jpg", "_DSC3318.jpg", "_DSC3600.jpg", "_DSC3684.jpg", "_DSC3799.jpg", "_DSC4621.jpg", "_DSC5112.jpg", "_DSC5218BW.jpg", "_DSC5277.jpg", "_DSC5413.jpg", "_DSC5442.jpg", "_DSC5493.jpg", "_DSC5494.jpg", "_DSC6985.jpg", 
         "_DUL1027.jpg", "_DUL1059.jpg", "_DUL10871920x1280.jpg",
         "_ESS0426.jpg",
         "_TRI2294.jpg", "_TRI2295.jpg",
@@ -71,7 +71,7 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "Cofre de los deseos.jpg",
         "Generated Image September 26, 2025 - 10_41AM.jpg",
         "Obsidiana Negra 2.jpg", "Obsidiana Negra.jpg",
-        "Spirito 180300028.jpg", "Spirito 180300104.jpg"
+        "Spirito 180300028.jpg"
     ],
     advertising: [
         "_BAM1698.jpg",
