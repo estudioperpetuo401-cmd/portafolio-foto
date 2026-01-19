@@ -18,11 +18,10 @@ interface CategoryPageBaseProps {
 }
 
 // =====================================================================
-// 📝 MANIFIESTO DE FOTOS (Lista Actualizada con las nuevas DAN)
+// 📝 MANIFIESTO DE FOTOS (Lista Actualizada: Social + Producto)
 // =====================================================================
 const PHOTO_MANIFEST: Record<string, string[]> = {
     social: [
-        // --- NUEVAS AGREGADAS ---
         "_DAN1710.jpg",
         "_DAN1668.jpg",
         "_DAN1487.jpg",
@@ -32,7 +31,6 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_DAN1004.jpg",
         "_DAN1000.jpg",
         "_DAN1773.jpg",
-        // --- ANTERIORES ---
         "_15S0192.JPG",
         "_15S0195.JPG",
         "_15S0275.JPG",
@@ -65,6 +63,49 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_MG_9445.jpg",
         "_MG_9703.jpg",
         "_MG_9724.jpg"
+    ],
+    product: [
+        // --- RECUPERADAS (Versión JPG) ---
+        "_ICO8158.jpg",
+        "_ICO8285.jpg",
+        "_ICO9001.jpg",
+        // --- ANTERIORES ---
+        "Arabesque 202500642.jpg",
+        "Cofre de los deseos.jpg",
+        "Generated Image September 26, 2025 - 10_41AM.png",
+        "Obsidiana Negra 2.jpg",
+        "Obsidiana Negra.jpg",
+        "Spirito 180300028.jpg",
+        "Spirito 180300104.jpg",
+        "_ATH0011.jpg",
+        "_ATH0022.jpg",
+        "_ATH0264.jpg",
+        "_ATH0279.jpg",
+        "_ATH0280.png",
+        "_ATH0289.jpg",
+        "_ATH0470.jpg",
+        "_ATH0747 IA.png",
+        "_ATH0885 IA.jpg",
+        "_ATH1017 IA.jpg",
+        "_ATH1148 IA2.jpg",
+        "_BAM0016.jpg",
+        "_BAM1671.jpg",
+        "_DUL2757.jpg",
+        "_ESS0008.jpg",
+        "_ESS0016.jpg",
+        "_ESS0227.jpg",
+        "_ESS0240.jpg",
+        "_ICO8159.png",
+        "_ICO8256.jpg",
+        "_ML12690.jpg",
+        "_ML12718.jpg",
+        "_ML12749.jpg",
+        "_ML12804.jpg",
+        "_ML12850.jpg",
+        "_VAL0096.JPG",
+        "_VAL0153.JPG",
+        "_VAL0183.JPG",
+        "_VAL0625.jpg"
     ],
     fashion: [
         "_ATH0073_2.jpg",
@@ -179,44 +220,6 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_MPA0031.jpg",
         "_TE10204BW.jpg",
         "_TE10205.png"
-    ],
-    product: [
-        "Arabesque 202500642.jpg",
-        "Cofre de los deseos.jpg",
-        "Generated Image September 26, 2025 - 10_41AM.png",
-        "Obsidiana Negra 2.jpg",
-        "Obsidiana Negra.jpg",
-        "Spirito 180300028.jpg",
-        "Spirito 180300104.jpg",
-        "_ATH0011.jpg",
-        "_ATH0022.jpg",
-        "_ATH0264.jpg",
-        "_ATH0279.jpg",
-        "_ATH0280.png",
-        "_ATH0289.jpg",
-        "_ATH0470.jpg",
-        "_ATH0747 IA.png",
-        "_ATH0885 IA.jpg",
-        "_ATH1017 IA.jpg",
-        "_ATH1148 IA2.jpg",
-        "_BAM0016.jpg",
-        "_BAM1671.jpg",
-        "_DUL2757.jpg",
-        "_ESS0008.jpg",
-        "_ESS0016.jpg",
-        "_ESS0227.jpg",
-        "_ESS0240.jpg",
-        "_ICO8159.png",
-        "_ICO8256.jpg",
-        "_ML12690.jpg",
-        "_ML12718.jpg",
-        "_ML12749.jpg",
-        "_ML12804.jpg",
-        "_ML12850.jpg",
-        "_VAL0096.JPG",
-        "_VAL0153.JPG",
-        "_VAL0183.JPG",
-        "_VAL0625.jpg"
     ]
 };
 
