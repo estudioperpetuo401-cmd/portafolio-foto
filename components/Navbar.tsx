@@ -22,7 +22,7 @@ const Navbar = () => {
     const locale = useLocale();
 
     // =======================================================
-    // 📝 TEXTOS FIJOS (Para que nunca fallen)
+    // 📝 TEXTOS FIJOS (Seguridad total)
     // =======================================================
     const labels = {
         es: {
@@ -30,7 +30,6 @@ const Navbar = () => {
             portfolio: "PORTAFOLIO",
             about: "SOBRE MÍ",
             contact: "CONTACTO",
-            // Categorías
             social: "SOCIAL",
             fashion: "FASHION",
             portrait: "RETRATO",
@@ -44,7 +43,6 @@ const Navbar = () => {
             portfolio: "PORTFOLIO",
             about: "ABOUT",
             contact: "CONTACT",
-            // Categories
             social: "SOCIAL",
             fashion: "FASHION",
             portrait: "PORTRAIT",
@@ -73,7 +71,7 @@ const Navbar = () => {
         return pathname === localizedPath;
     };
 
-    // Bloquear el scroll cuando el menú está abierto
+    // Bloquear el scroll cuando el menú móvil está abierto
     useEffect(() => {
         if (mobileMenuOpen) {
             document.body.style.overflow = "hidden";
@@ -83,7 +81,6 @@ const Navbar = () => {
     }, [mobileMenuOpen]);
 
     return (
-        // z-[9999] asegura que esté POR ENCIMA de todo
         <nav className="fixed top-0 left-0 w-full z-[9999] bg-white h-28 border-b border-gray-100 px-6 md:px-12 flex items-center shadow-sm">
             <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
                 
@@ -108,20 +105,22 @@ const Navbar = () => {
                         </span>
                     </Link>
 
-                    {/* Dropdown Portafolio PC */}
-                    <div className="relative" onMouseEnter={() => setPortfolioOpen(true)} onMouseLeave={() => setPortfolioOpen(false)}>
-                        <button className="flex items-center space-x-1 text-[11px] uppercase tracking-[0.2em] font-medium text-gray-500 hover:text-black transition-colors">
+                    {/* Dropdown Portafolio PC - CORREGIDO */}
+                    <div className="relative h-full flex items-center" onMouseEnter={() => setPortfolioOpen(true)} onMouseLeave={() => setPortfolioOpen(false)}>
+                        <button className={cn("flex items-center space-x-1 text-[11px] uppercase tracking-[0.2em] font-medium transition-colors focus:outline-none h-full", portfolioOpen ? "text-black" : "text-gray-500 hover:text-black")}>
                             <span>{t.portfolio}</span>
                             <HiChevronDown className={`transition-transform duration-300 ${portfolioOpen ? "rotate-180" : ""}`} />
                         </button>
 
-                        {/* Menú desplegable simple (sin animaciones complejas) */}
-                        <div className={`absolute top-full left-0 mt-2 w-48 bg-white shadow-xl border border-gray-100 py-4 flex flex-col transition-opacity duration-200 ${portfolioOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
-                            {portfolioLinks.map((link) => (
-                                <Link key={link.name} href={link.href} className="px-6 py-2 text-[10px] uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-black">
-                                    {link.name}
-                                </Link>
-                            ))}
+                        {/* ELIMINAMOS 'mt-2' PARA QUE NO HAYA HUECO */}
+                        <div className={`absolute top-[60%] left-0 pt-6 w-48 transition-opacity duration-200 ${portfolioOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+                            <div className="bg-white shadow-xl border border-gray-100 py-4 flex flex-col">
+                                {portfolioLinks.map((link) => (
+                                    <Link key={link.name} href={link.href} className="px-6 py-2 text-[10px] uppercase tracking-widest text-gray-500 hover:bg-gray-50 hover:text-black">
+                                        {link.name}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
@@ -155,7 +154,6 @@ const Navbar = () => {
             </div>
 
             {/* MENÚ MÓVIL (Pantalla Completa) */}
-            {/* Usamos lógica simple: Si mobileMenuOpen es true, mostramos el div. Si no, hidden. */}
             <div className={`fixed inset-0 bg-white z-[10000] flex flex-col pt-32 px-6 overflow-y-auto transition-all duration-300 ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}`}>
                 
                 <div className="flex flex-col items-center space-y-8 pb-20">
