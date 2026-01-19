@@ -18,9 +18,42 @@ interface CategoryPageBaseProps {
 }
 
 // =====================================================================
-// 📝 MANIFIESTO DE FOTOS (Lista Actualizada: Social + Producto)
+// 📝 MANIFIESTO DE FOTOS (Move Actualizado a .jpg)
 // =====================================================================
 const PHOTO_MANIFEST: Record<string, string[]> = {
+    move: [
+        // Actualizado según tu captura (Todo a .jpg)
+        "Yuli03267.jpg",
+        "0546.jpg",
+        "_TRI2295.jpg",
+        "_TRI2294.jpg",
+        "_ESS0426.jpg",
+        "_DUL10871920x1280.jpg",
+        "_DUL1059.jpg",
+        "_DUL1027.jpg",
+        "_DSC6986.jpg",
+        "_DSC6985.jpg",
+        "_DSC5494.jpg",
+        "_DSC5493.jpg",
+        "_DSC5442.jpg",
+        "_DSC5413.jpg",
+        "_DSC5277.jpg",
+        "_DSC5218BW.jpg",
+        "_DSC5112.jpg",
+        "_DSC4621.jpg",
+        "_DSC3799.jpg",
+        "_DSC3684.jpg",
+        "_DSC3600.jpg",
+        "_DSC3318.jpg",
+        "_DSC0649.jpg",
+        "_DSC0635.jpg",
+        "_COP1147.jpg",
+        "_COP1144.jpg",
+        "_COP0694.jpg",
+        "_COP0296.jpg",
+        "_COP0294.jpg",
+        "_BMA0058.jpg"
+    ],
     social: [
         "_DAN1710.jpg",
         "_DAN1668.jpg",
@@ -65,11 +98,9 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_MG_9724.jpg"
     ],
     product: [
-        // --- RECUPERADAS (Versión JPG) ---
         "_ICO8158.jpg",
         "_ICO8285.jpg",
         "_ICO9001.jpg",
-        // --- ANTERIORES ---
         "Arabesque 202500642.jpg",
         "Cofre de los deseos.jpg",
         "Generated Image September 26, 2025 - 10_41AM.png",
@@ -157,38 +188,6 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
         "_ML12896.jpg",
         "_MPA0064.jpg",
         "_VAL0140.jpg"
-    ],
-    move: [
-        "0546.jpg",
-        "Yuli03267.jpg",
-        "_BMA0058.jpg",
-        "_COP0294.JPG",
-        "_COP0296.jpg",
-        "_COP0694.jpg",
-        "_COP1144.jpg",
-        "_COP1147.jpg",
-        "_DSC0635.png",
-        "_DSC0649.png",
-        "_DSC3318.JPG",
-        "_DSC3600.jpg",
-        "_DSC3684.JPG",
-        "_DSC3799.jpg",
-        "_DSC4621.JPG",
-        "_DSC5112.png",
-        "_DSC5218BW.png",
-        "_DSC5277.png",
-        "_DSC5413.png",
-        "_DSC5442.png",
-        "_DSC5493.png",
-        "_DSC5494.jpg",
-        "_DSC6985.png",
-        "_DSC6986.JPG",
-        "_DUL1027.png",
-        "_DUL1059.png",
-        "_DUL10871920x1280.jpg",
-        "_ESS0426.jpg",
-        "_TRI2294.JPG",
-        "_TRI2295.jpg"
     ],
     advertising: [
         "_BAM1698.jpg",
