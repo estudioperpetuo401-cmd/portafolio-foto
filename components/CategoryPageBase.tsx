@@ -18,11 +18,11 @@ interface CategoryPageBaseProps {
 }
 
 // =====================================================================
-// 📝 MANIFIESTO DE FOTOS (Move Actualizado a .jpg)
+// 📝 MANIFIESTO DE FOTOS
+// Categoría MOVE limpia: Solo archivos .jpg
 // =====================================================================
 const PHOTO_MANIFEST: Record<string, string[]> = {
     move: [
-        // Actualizado según tu captura (Todo a .jpg)
         "Yuli03267.jpg",
         "0546.jpg",
         "_TRI2295.jpg",
