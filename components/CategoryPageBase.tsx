@@ -5,10 +5,8 @@ import { Photo } from "@/data/portfolio";
 import FullWidthMasonryGallery from "@/components/FullWidthMasonryGallery";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import fs from "fs";
 import path from "path";
 import { shuffleArray } from "@/lib/shuffle";
-import { getImageSize } from "@/lib/image-size";
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -19,59 +17,206 @@ interface CategoryPageBaseProps {
     locale: string;
 }
 
+// =====================================================================
+// 📝 MANIFIESTO DE FOTOS (Lista Manual)
+// =====================================================================
+const PHOTO_MANIFEST: Record<string, string[]> = {
+    fashion: [
+        "_ATH0073_2.jpg",
+        "_ATH0191.JPG",
+        "_ATH0240.jpg",
+        "_ATH0251.jpg",
+        "_ATH1133.jpg",
+        "_ATH1378.jpg",
+        "_DAN9621BW.jpg",
+        "_DSC4571.png",
+        "_DSC4950.png",
+        "_DSC4958.png",
+        "_DSC5074.png",
+        "_DSC5116.png",
+        "_ESS0018.jpg",
+        "_FAM1711.jpg",
+        "_FAM2437.jpg",
+        "_FAM2447.jpg",
+        "_ML20211.jpg",
+        "_ML20809.jpg",
+        "_SPI0844.jpg"
+    ],
+    portrait: [
+        "_ATH00.jpg",
+        "_ATH0036.jpg",
+        "_ATH0065.jpg",
+        "_ATH0072.JPG",
+        "_ATH0132.jpg",
+        "_ATH0293.jpg",
+        "_ATH0333.jpg",
+        "_ATH0334.jpg",
+        "_BMA0112.jpg",
+        "_CAT1162.JPG",
+        "_CAT4390.jpg",
+        "_CAT6625.jpg",
+        "_DSC0185.jpg",
+        "_DSC1010.JPG",
+        "_DSC6674.JPG",
+        "_DSC6840.JPG",
+        "_DSC6889.JPG",
+        "_ESS0036.JPG",
+        "_ESS0145BW.jpg",
+        "_ESS0178.jpg",
+        "_ESS0400.jpg",
+        "_ICO4979.png",
+        "_ICO5002BW.png",
+        "_ICO5210.png",
+        "_ICO5244.png",
+        "_ML12896.jpg",
+        "_MPA0064.jpg",
+        "_VAL0140.jpg"
+    ],
+    move: [
+        "0546.jpg",
+        "Yuli03267.jpg",
+        "_BMA0058.jpg",
+        "_COP0294.JPG",
+        "_COP0296.jpg",
+        "_COP0694.jpg",
+        "_COP1144.jpg",
+        "_COP1147.jpg",
+        "_DSC0635.png",
+        "_DSC0649.png",
+        "_DSC3318.JPG",
+        "_DSC3600.jpg",
+        "_DSC3684.JPG",
+        "_DSC3799.jpg",
+        "_DSC4621.JPG",
+        "_DSC5112.png",
+        "_DSC5218BW.png",
+        "_DSC5277.png",
+        "_DSC5413.png",
+        "_DSC5442.png",
+        "_DSC5493.png",
+        "_DSC5494.jpg",
+        "_DSC6985.png",
+        "_DSC6986.JPG",
+        "_DUL1027.png",
+        "_DUL1059.png",
+        "_DUL10871920x1280.jpg",
+        "_ESS0426.jpg",
+        "_TRI2294.JPG",
+        "_TRI2295.jpg"
+    ],
+    advertising: [
+        "_BAM1698.jpg",
+        "_CAT8668.jpg",
+        "_CAT8802.jpg",
+        "_DSC1029.JPG",
+        "_DSC1070.JPG",
+        "_DSC2341.JPG",
+        "_DSC4676.jpg",
+        "_DSC4770.jpg",
+        "_FAM5338.jpg",
+        "_NVX0064.jpg",
+        "_NVX0337.jpg",
+        "_NVX0462.jpg",
+        "_NVX0608.jpg",
+        "_SPI0864.jpg",
+        "_SPI1009.jpg"
+    ],
+    intimate: [
+        "_01.jpg",
+        "_ATH0007.jpg",
+        "_ATH0057.png",
+        "_ATH0060.jpg",
+        "_ATH0093.jpg",
+        "_ATH0182.jpg",
+        "_DSC1165.jpg",
+        "_DSC3436BW.png",
+        "_DSC4846.jpg",
+        "_MPA0031.jpg",
+        "_TE10204BW.jpg",
+        "_TE10205.png"
+    ],
+    product: [
+        "Arabesque 202500642.jpg",
+        "Cofre de los deseos.jpg",
+        "Generated Image September 26, 2025 - 10_41AM.png",
+        "Obsidiana Negra 2.jpg",
+        "Obsidiana Negra.jpg",
+        "Spirito 180300028.jpg",
+        "Spirito 180300104.jpg",
+        "_ATH0011.jpg",
+        "_ATH0022.jpg",
+        "_ATH0264.jpg",
+        "_ATH0279.jpg",
+        "_ATH0280.png",
+        "_ATH0289.jpg",
+        "_ATH0470.jpg",
+        "_ATH0747 IA.png",
+        "_ATH0885 IA.jpg",
+        "_ATH1017 IA.jpg",
+        "_ATH1148 IA2.jpg",
+        "_BAM0016.jpg",
+        "_BAM1671.jpg",
+        "_DUL2757.jpg",
+        "_ESS0008.jpg",
+        "_ESS0016.jpg",
+        "_ESS0227.jpg",
+        "_ESS0240.jpg",
+        "_ICO8159.png",
+        "_ICO8256.jpg",
+        "_ML12690.jpg",
+        "_ML12718.jpg",
+        "_ML12749.jpg",
+        "_ML12804.jpg",
+        "_ML12850.jpg",
+        "_VAL0096.JPG",
+        "_VAL0153.JPG",
+        "_VAL0183.JPG",
+        "_VAL0625.jpg"
+    ],
+    social: [] // No enviaste lista de Social, queda vacío por ahora.
+};
+
 export default async function CategoryPageBase({ category, locale }: CategoryPageBaseProps) {
     const t = await getTranslations("Categories");
 
     // Global category order
     const categories = ["social", "fashion", "portrait", "move", "product", "advertising", "intimate"];
 
-    // File system scanning
-    const directory = path.join(process.cwd(), "public", "uploads", category);
-
     let photos: Photo[] = [];
     let errorMsg = "";
 
     try {
-        if (fs.existsSync(directory)) {
-            const files = fs.readdirSync(directory);
-            const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".avif"];
+        // Obtenemos la lista de la categoría actual (usando minúsculas para coincidir con la URL)
+        const imageFiles = PHOTO_MANIFEST[category.toLowerCase()] || [];
 
-            const imageFiles = files.filter((file: string) =>
-                imageExtensions.includes(path.extname(file).toLowerCase())
-            );
-
-            if (imageFiles.length === 0) {
-                errorMsg = "Próximamente";
-            } else {
-                const shuffledFiles = shuffleArray(imageFiles);
-                photos = shuffledFiles.map((file: string, index: number) => {
-                    const filePath = path.join(directory, file);
-                    const dimensions = getImageSize(filePath);
-
-                    const nameWithoutExt = path.parse(file).name;
-                    const cleanName = nameWithoutExt
-                        .replace(/[_-]/g, " ")
-                        .trim();
-
-                    const formattedTitle = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
-
-                    return {
-                        id: index,
-                        url: `/uploads/${category}/${file}`,
-                        alt: formattedTitle,
-                        width: dimensions?.width || 1000,
-                        height: dimensions?.height || 1500,
-                        title: formattedTitle,
-                        year: ""
-                    };
-                });
-            }
-        } else {
+        if (imageFiles.length === 0) {
             errorMsg = "Próximamente";
+        } else {
+            const shuffledFiles = shuffleArray(imageFiles);
+
+            photos = shuffledFiles.map((file: string, index: number) => {
+                const nameWithoutExt = path.parse(file).name;
+                const cleanName = nameWithoutExt
+                    .replace(/[_-]/g, " ")
+                    .trim();
+
+                const formattedTitle = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+
+                return {
+                    id: index,
+                    // Aseguramos que la URL use el nombre de carpeta correcto
+                    url: `/uploads/${category}/${file}`, 
+                    alt: formattedTitle,
+                    width: 1000, 
+                    height: 1500,
+                    title: formattedTitle,
+                    year: ""
+                };
+            });
         }
     } catch (err) {
-        console.error(`Error reading directory for ${category}:`, err);
-        errorMsg = "Próximamente";
+        console.error(`Error processing images for ${category}:`, err);
+        errorMsg = "Error al cargar";
     }
 
     return (
@@ -96,7 +241,6 @@ export default async function CategoryPageBase({ category, locale }: CategoryPag
 
             {/* Main Content Area */}
             <div className="w-full">
-                {/* Grid or Error Message */}
                 {errorMsg ? (
                     <div className="px-6 md:px-12 py-20 text-center">
                         <p className="text-gray-400 uppercase tracking-widest text-sm font-light italic">
