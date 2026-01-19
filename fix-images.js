@@ -11,30 +11,41 @@ function processDirectory(directory) {
     }
 
     const files = fs.readdirSync(directory);
+    let cambios = 0;
 
     files.forEach(file => {
         const fullPath = path.join(directory, file);
         const stat = fs.statSync(fullPath);
 
         if (stat.isDirectory()) {
-            // Si es carpeta, entramos a revisar
             processDirectory(fullPath);
         } else {
-            // Si es archivo, miramos la extensión
             const ext = path.extname(file);
-            
-            // Si la extensión tiene mayúsculas (ej: .JPG), la cambiamos
+            // Si tiene extensión y NO es totalmente minúscula
             if (ext && ext !== ext.toLowerCase()) {
-                const newName = file.replace(ext, ext.toLowerCase());
-                const newPath = path.join(directory, newName);
-                
-                fs.renameSync(fullPath, newPath);
-                console.log(`✅ Corregido: ${file} -> ${newName}`);
+                const lowerName = file.replace(ext, ext.toLowerCase());
+                const tempName = file + '.temp_renaming'; // Nombre temporal feo
+
+                const oldPath = path.join(directory, file);
+                const tempPath = path.join(directory, tempName);
+                const newPath = path.join(directory, lowerName);
+
+                try {
+                    // 1. Renombrar a temporal (A.JPG -> A.JPG.temp_renaming)
+                    fs.renameSync(oldPath, tempPath);
+                    // 2. Renombrar al final (A.JPG.temp_renaming -> a.jpg)
+                    fs.renameSync(tempPath, newPath);
+                    
+                    console.log(`✅ Forzado: ${file} -> ${lowerName}`);
+                    cambios++;
+                } catch (e) {
+                    console.error(`❌ Error con ${file}:`, e);
+                }
             }
         }
     });
 }
 
-console.log("🧹 Iniciando limpieza de nombres...");
+console.log("🔨 Iniciando renombrado forzoso (JPG -> temp -> jpg)...");
 processDirectory(uploadsDir);
-console.log("✨ ¡Listo! Todas las extensiones están en minúscula.");
+console.log("✨ Proceso terminado.");
