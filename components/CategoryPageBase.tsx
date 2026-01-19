@@ -34,7 +34,6 @@ const PHOTO_MANIFEST: Record<string, string[]> = {
     ],
     fashion: [
         "_ATH0073_2.jpg", "_ATH0191.jpg", "_ATH0240.jpg", "_ATH0251.jpg", "_ATH1133.jpg", "_ATH1378.jpg",
-        "_COP1144.jpg",
         "_DAN9621BW.jpg",
         "_DSC4571.jpg", "_DSC4950.jpg", "_DSC4958.jpg", "_DSC5074.jpg", "_DSC5116.jpg",
         "_ESS0018.jpg",
