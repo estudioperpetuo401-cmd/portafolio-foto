@@ -1,123 +1,86 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { useTranslations, useLocale } from "next-intl";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+import Image from "next/image";
+import { useLocale } from "next-intl";
 
 export interface CategoryItem {
     id: string;
     title: string;
-    image: string;
+    images: string[]; // Recibimos un array de fotos
 }
 
 interface CategoryBannerProps {
-    categories?: CategoryItem[];
+    categories: CategoryItem[];
 }
 
-const CategoryBanner = ({ categories: dynamicCategories }: CategoryBannerProps) => {
-    const [hoveredId, setHoveredId] = useState<string | null>(null);
-    const t = useTranslations("HomePage");
+const CategoryBanner: React.FC<CategoryBannerProps> = ({ categories }) => {
     const locale = useLocale();
 
-    const manualCategories = [
-        {
-            id: "social",
-            title: t("Categories.social"),
-            image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1469",
-        },
-        {
-            id: "fashion",
-            title: t("Categories.fashion"),
-            image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1470",
-        },
-        {
-            id: "portrait",
-            title: t("Categories.portrait"),
-            image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1374",
-        },
-        {
-            id: "product",
-            title: t("Categories.product"),
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1470",
-        },
-        {
-            id: "advertising",
-            title: t("Categories.advertising"),
-            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1470",
-        },
-        {
-            id: "intimate",
-            title: t("Categories.intimate"),
-            image: "/intimate.jpg",
-        },
-    ];
+    return (
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 pb-20">
+            {/* Grid Layout: 1 columna en móvil, 2 o 3 en PC dependiendo del tamaño */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-4">
+                {categories.map((category) => (
+                    <CategoryCard key={category.id} category={category} locale={locale} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
-    const categories = dynamicCategories || manualCategories;
+// =====================================================
+// 🎬 TARJETA ANIMADA (El componente mágico)
+// =====================================================
+const CategoryCard = ({ category, locale }: { category: CategoryItem, locale: string }) => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    // Este efecto cambia la foto cada 1 segundo (1000ms)
+    useEffect(() => {
+        if (category.images.length <= 1) return; // Si solo hay 1 foto, no hacemos nada
+
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => 
+                (prevIndex + 1) % category.images.length
+            );
+        }, 1000); // <--- AQUÍ CAMBIAS LA VELOCIDAD (1000 = 1 seg)
+
+        return () => clearInterval(interval);
+    }, [category.images.length]);
 
     return (
-        <div className="flex flex-col md:flex-row h-[calc(100vh-112px)] md:h-[calc(100vh-112px)] w-full overflow-hidden bg-white">
-            {categories.map((category) => (
-                <motion.div
-                    key={category.id}
-                    onMouseEnter={() => setHoveredId(category.id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                    animate={{
-                        flex: hoveredId === category.id ? 2 : 1,
-                    }}
-                    transition={{
-                        type: "spring",
-                        damping: 20,
-                        stiffness: 100,
-                    }}
-                    className="relative flex-1 h-full cursor-pointer overflow-hidden border-b md:border-b-0 md:border-r border-white/10 last:border-0 group"
-                >
-                    <Link href={`/${locale}/portfolio/${category.id}`} className="block w-full h-full">
-                        {/* Background Image: B&W to Color transition */}
-                        <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-1000">
-                            <Image
-                                src={category.image}
-                                alt={category.title}
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                            <div className="absolute inset-0 bg-black/30" />
-                        </div>
+        <Link href={`/${locale}/portfolio/${category.id}`} className="block group relative overflow-hidden h-[300px] md:h-[400px]">
+            {/* Renderizamos las imágenes */}
+            <div className="absolute inset-0 w-full h-full bg-gray-100">
+                {category.images.map((src, index) => (
+                    <div
+                        key={src}
+                        className={`absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out ${
+                            index === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                        }`}
+                    >
+                        <Image
+                            src={src}
+                            alt={category.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </div>
+                ))}
+            </div>
 
-                        {/* Centered, vertical text with shadow for legibility */}
-                        <div className="absolute inset-0 flex items-center justify-center p-4 z-10 text-center pointer-events-none">
-                            <motion.h2
-                                animate={{
-                                    opacity: hoveredId === category.id ? 1 : 0.4,
-                                    scale: hoveredId === category.id ? 1.05 : 0.9,
-                                }}
-                                className={cn(
-                                    "text-white font-bold tracking-[0.1em] uppercase leading-none font-serif drop-shadow-md mix-blend-difference -rotate-90 transition-all duration-500",
-                                    hoveredId === category.id
-                                        ? "text-xl md:text-2xl lg:text-3xl whitespace-pre-line"
-                                        : "text-3xl md:text-5xl lg:text-7xl whitespace-nowrap"
-                                )}
-                            >
-                                {hoveredId === category.id
-                                    ? category.title
-                                    : category.title
-                                        .split(/[\s\n]+/)
-                                        .map(word => word[0])
-                                        .join('')}
-                            </motion.h2>
-                        </div>
-                    </Link>
-                </motion.div>
-            ))}
-        </div>
+            {/* Capa oscura al pasar el mouse */}
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-20 duration-300" />
+
+            {/* Título centrado */}
+            <div className="absolute inset-0 flex items-center justify-center z-30">
+                <h2 className="text-white text-2xl md:text-3xl font-light tracking-[0.3em] uppercase drop-shadow-md text-center px-4">
+                    {category.title}
+                </h2>
+            </div>
+        </Link>
     );
 };
 

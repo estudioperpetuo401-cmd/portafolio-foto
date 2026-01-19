@@ -2,18 +2,45 @@ import CategoryBanner, { CategoryItem } from "@/components/CategoryBanner";
 import { getTranslations } from "next-intl/server";
 
 // =====================================================================
-// 🖼️ IMÁGENES DE PORTADA (Selección Manual)
-// Aquí definimos qué foto aparecerá como portada en el Home para cada categoría.
-// He puesto la primera de cada lista, pero puedes cambiar el nombre si prefieres otra.
+// 🎞️ CARRUSEL DE PORTADA
+// Aquí definimos 3 fotos para cada categoría. Cambiarán cada segundo.
 // =====================================================================
-const COVER_IMAGES: Record<string, string> = {
-    social: "_15S0192.JPG",
-    fashion: "_ATH0073_2.jpg",
-    portrait: "_ATH00.jpg",
-    move: "0546.jpg",
-    product: "Arabesque 202500642.jpg",
-    advertising: "_BAM1698.jpg",
-    intimate: "_01.jpg"
+const COVER_GALLERY: Record<string, string[]> = {
+    social: [
+        "_DAN1710.jpg",      // Nueva
+        "_15S0192.JPG",      // Original
+        "_ATH0271.jpg"       // Extra
+    ],
+    fashion: [
+        "_ATH0073_2.jpg",
+        "_DSC4571.png",
+        "_FAM2437.jpg"
+    ],
+    portrait: [
+        "_ATH00.jpg",
+        "_ESS0400.jpg",
+        "_ICO5210.png"
+    ],
+    move: [
+        "0546.jpg",
+        "_DSC3600.jpg",
+        "_TRI2295.jpg"
+    ],
+    product: [
+        "Arabesque 202500642.jpg",
+        "Obsidiana Negra.jpg",
+        "_ATH0011.jpg"
+    ],
+    advertising: [
+        "_BAM1698.jpg",
+        "_DSC4676.jpg",
+        "_NVX0064.jpg"
+    ],
+    intimate: [
+        "_01.jpg",
+        "_ATH0060.jpg",
+        "_DSC1165.jpg"
+    ]
 };
 
 export default async function Home() {
@@ -21,18 +48,17 @@ export default async function Home() {
     const slugs = ["social", "fashion", "portrait", "move", "product", "advertising", "intimate"];
 
     const categories: CategoryItem[] = slugs.map((slug) => {
-        // Buscamos el nombre de la foto en nuestra lista manual
-        const fileName = COVER_IMAGES[slug];
+        // Obtenemos las 3 fotos, o usamos el logo si falla algo
+        const fileNames = COVER_GALLERY[slug] || [];
         
-        // Si existe foto, creamos la ruta completa. Si no, usamos el logo.
-        const coverImage = fileName 
-            ? `/uploads/${slug}/${fileName}` 
-            : "/logo.png";
+        const images = fileNames.length > 0
+            ? fileNames.map(name => `/uploads/${slug}/${name}`)
+            : ["/logo.png"];
 
         return {
             id: slug,
             title: t(slug),
-            image: coverImage
+            images: images // Ahora pasamos una lista, no una sola foto
         };
     });
 
