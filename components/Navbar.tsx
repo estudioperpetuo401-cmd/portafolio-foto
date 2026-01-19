@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HiOutlineMenuAlt4, HiX, HiChevronDown } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslations, useLocale } from "next-intl";
+import { useLocale } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -19,19 +19,53 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [portfolioOpen, setPortfolioOpen] = useState(false);
     const pathname = usePathname();
-    const t = useTranslations("Nav");
     const locale = useLocale();
 
-    const tCat = useTranslations("Categories");
+    // =======================================================
+    // 📝 DICCIONARIO MANUAL (Para asegurar que el texto se vea)
+    // =======================================================
+    const labels = {
+        es: {
+            home: "INICIO",
+            portfolio: "PORTAFOLIO",
+            about: "SOBRE MÍ",
+            contact: "CONTACTO",
+            // Categorías
+            social: "SOCIAL",
+            fashion: "FASHION",
+            portrait: "RETRATO",
+            move: "MOVE",
+            product: "PRODUCTO",
+            advertising: "PUBLICITARIA",
+            intimate: "INTIMATE"
+        },
+        en: {
+            home: "HOME",
+            portfolio: "PORTFOLIO",
+            about: "ABOUT",
+            contact: "CONTACT",
+            // Categories
+            social: "SOCIAL",
+            fashion: "FASHION",
+            portrait: "PORTRAIT",
+            move: "MOVE",
+            product: "PRODUCT",
+            advertising: "ADVERTISING",
+            intimate: "INTIMATE"
+        }
+    };
+
+    // Seleccionamos el idioma actual (si no es 'es' ni 'en', usamos español por defecto)
+    const t = (labels as any)[locale] || labels.es;
 
     const portfolioLinks = [
-        { name: tCat("social"), href: `/${locale}/portfolio/social` },
-        { name: tCat("fashion"), href: `/${locale}/portfolio/fashion` },
-        { name: tCat("portrait"), href: `/${locale}/portfolio/portrait` },
-        { name: tCat("move"), href: `/${locale}/portfolio/move` },
-        { name: tCat("product"), href: `/${locale}/portfolio/product` },
-        { name: tCat("advertising"), href: `/${locale}/portfolio/advertising` },
-        { name: tCat("intimate"), href: `/${locale}/portfolio/intimate` },
+        { name: t.social, href: `/${locale}/portfolio/social` },
+        { name: t.fashion, href: `/${locale}/portfolio/fashion` },
+        { name: t.portrait, href: `/${locale}/portfolio/portrait` },
+        { name: t.move, href: `/${locale}/portfolio/move` },
+        { name: t.product, href: `/${locale}/portfolio/product` },
+        { name: t.advertising, href: `/${locale}/portfolio/advertising` },
+        { name: t.intimate, href: `/${locale}/portfolio/intimate` },
     ];
 
     const getActivePath = (path: string) => {
@@ -39,7 +73,7 @@ const Navbar = () => {
         return pathname === localizedPath;
     };
 
-    // Prevent scrolling when mobile menu is open
+    // Evita el scroll cuando el menú móvil está abierto
     useEffect(() => {
         if (mobileMenuOpen) {
             document.body.style.overflow = "hidden";
@@ -49,10 +83,9 @@ const Navbar = () => {
     }, [mobileMenuOpen]);
 
     return (
-        // FIX 1: Increased z-index to 100 to ensure it stays above the sticky sub-menu
         <nav className="fixed top-0 left-0 w-full z-[100] bg-white/95 backdrop-blur-sm h-28 border-b border-gray-100 px-6 md:px-12 flex items-center">
             <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
-                {/* Left: Logo */}
+                {/* LOGO */}
                 <Link href={`/${locale}`} className="relative z-[102]">
                     <div className="relative w-[180px] md:w-[240px] h-[60px] md:h-[80px]">
                         <Image
@@ -65,24 +98,25 @@ const Navbar = () => {
                     </div>
                 </Link>
 
-                {/* Center/Right: Desktop Links */}
+                {/* MENÚ DE ESCRITORIO (PC) */}
                 <div className="hidden md:flex items-center space-x-10">
                     <Link href={`/${locale}`}>
                         <span className={cn(
                             "text-[11px] uppercase tracking-[0.2em] font-medium transition-colors hover:text-gray-400",
                             getActivePath("/") ? "text-black" : "text-gray-500"
                         )}>
-                            {t("home")}
+                            {t.home}
                         </span>
                     </Link>
 
+                    {/* Dropdown Portafolio */}
                     <div
                         className="relative"
                         onMouseEnter={() => setPortfolioOpen(true)}
                         onMouseLeave={() => setPortfolioOpen(false)}
                     >
                         <button className="flex items-center space-x-1 text-[11px] uppercase tracking-[0.2em] font-medium text-gray-500 hover:text-black transition-colors focus:outline-none">
-                            <span>{t("portfolio")}</span>
+                            <span>{t.portfolio}</span>
                             <HiChevronDown className={cn("transition-transform duration-300", portfolioOpen && "rotate-180")} />
                         </button>
 
@@ -111,7 +145,7 @@ const Navbar = () => {
                             "text-[11px] uppercase tracking-[0.2em] font-medium transition-colors hover:text-gray-400",
                             getActivePath("/about") ? "text-black" : "text-gray-500"
                         )}>
-                            {t("about")}
+                            {t.about}
                         </span>
                     </Link>
                     <Link href={`/${locale}/contact`}>
@@ -119,7 +153,7 @@ const Navbar = () => {
                             "text-[11px] uppercase tracking-[0.2em] font-medium transition-colors hover:text-gray-400",
                             getActivePath("/contact") ? "text-black" : "text-gray-500"
                         )}>
-                            {t("contact")}
+                            {t.contact}
                         </span>
                     </Link>
 
@@ -128,8 +162,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* Mobile Toggle */}
-                {/* FIX 2: Ensure the toggle button is above everything with z-[102] */}
+                {/* BOTÓN HAMBURGUESA (MÓVIL) */}
                 <div className="md:hidden flex items-center space-x-4 relative z-[102]">
                     <LanguageSwitcher />
                     <button
@@ -141,24 +174,23 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* MENÚ DESPLEGABLE MÓVIL (Pantalla completa) */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        // FIX 3: Fixed full screen, high Z-index, scrollable if content is tall
                         className="fixed inset-0 bg-white z-[101] flex flex-col pt-32 px-6 overflow-y-auto"
                     >
                         <div className="flex flex-col items-center space-y-8 pb-10">
                             <Link href={`/${locale}`} onClick={() => setMobileMenuOpen(false)}>
-                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t("home")}</span>
+                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t.home}</span>
                             </Link>
                             
-                            {/* Portfolio Section in Mobile */}
+                            {/* Sección Portafolio Móvil */}
                             <div className="flex flex-col items-center space-y-4 w-full border-t border-b border-gray-100 py-6">
-                                <span className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">{t("portfolio")}</span>
+                                <span className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-2">{t.portfolio}</span>
                                 {portfolioLinks.map(link => (
                                     <Link key={link.name} href={link.href} onClick={() => setMobileMenuOpen(false)}>
                                         <span className="text-base uppercase tracking-widest hover:text-gray-500 transition-colors">
@@ -169,10 +201,10 @@ const Navbar = () => {
                             </div>
 
                             <Link href={`/${locale}/about`} onClick={() => setMobileMenuOpen(false)}>
-                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t("about")}</span>
+                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t.about}</span>
                             </Link>
                             <Link href={`/${locale}/contact`} onClick={() => setMobileMenuOpen(false)}>
-                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t("contact")}</span>
+                                <span className="text-xl uppercase tracking-[0.3em] font-light">{t.contact}</span>
                             </Link>
                         </div>
                     </motion.div>
