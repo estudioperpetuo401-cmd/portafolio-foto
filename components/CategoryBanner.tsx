@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 export interface CategoryItem {
     id: string;
     title: string;
-    images: string[]; // Recibimos un array de fotos
+    images: string[];
 }
 
 interface CategoryBannerProps {
@@ -19,9 +19,12 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({ categories }) => {
     const locale = useLocale();
 
     return (
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 pb-20">
-            {/* Grid Layout: 1 columna en móvil, 2 o 3 en PC dependiendo del tamaño */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-4">
+        <div className="w-full pb-20">
+            {/* CORRECCIÓN DE ESTILO:
+               1. Quitamos 'max-w-7xl mx-auto px-6' para que las fotos toquen los bordes de la pantalla (Full Width).
+               2. Usamos 'flex flex-col' para que sea una lista vertical (franjas), no una cuadrícula.
+            */}
+            <div className="flex flex-col w-full">
                 {categories.map((category) => (
                     <CategoryCard key={category.id} category={category} locale={locale} />
                 ))}
@@ -31,27 +34,29 @@ const CategoryBanner: React.FC<CategoryBannerProps> = ({ categories }) => {
 };
 
 // =====================================================
-// 🎬 TARJETA ANIMADA (El componente mágico)
+// 🎬 TARJETA TIPO "FRANJA" (Banner Ancho)
 // =====================================================
 const CategoryCard = ({ category, locale }: { category: CategoryItem, locale: string }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    // Este efecto cambia la foto cada 1 segundo (1000ms)
+    // Animación de cambio de foto (1 segundo)
     useEffect(() => {
-        if (category.images.length <= 1) return; // Si solo hay 1 foto, no hacemos nada
+        if (category.images.length <= 1) return;
 
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => 
                 (prevIndex + 1) % category.images.length
             );
-        }, 1000); // <--- AQUÍ CAMBIAS LA VELOCIDAD (1000 = 1 seg)
+        }, 1000); 
 
         return () => clearInterval(interval);
     }, [category.images.length]);
 
     return (
-        <Link href={`/${locale}/portfolio/${category.id}`} className="block group relative overflow-hidden h-[300px] md:h-[400px]">
-            {/* Renderizamos las imágenes */}
+        // Altura ajustada: h-[250px] en móvil y h-[450px] en PC para que se vea panorámico
+        <Link href={`/${locale}/portfolio/${category.id}`} className="relative block w-full h-[250px] md:h-[450px] overflow-hidden group">
+            
+            {/* Imágenes de fondo */}
             <div className="absolute inset-0 w-full h-full bg-gray-100">
                 {category.images.map((src, index) => (
                     <div
@@ -64,19 +69,19 @@ const CategoryCard = ({ category, locale }: { category: CategoryItem, locale: st
                             src={src}
                             alt={category.title}
                             fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover" // Esto asegura que la foto llene la franja sin deformarse
+                            priority={true}
                         />
                     </div>
                 ))}
             </div>
 
-            {/* Capa oscura al pasar el mouse */}
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-20 duration-300" />
+            {/* Capa oscura suave */}
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors z-20 duration-300" />
 
-            {/* Título centrado */}
-            <div className="absolute inset-0 flex items-center justify-center z-30">
-                <h2 className="text-white text-2xl md:text-3xl font-light tracking-[0.3em] uppercase drop-shadow-md text-center px-4">
+            {/* Texto Centrado */}
+            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                <h2 className="text-white text-3xl md:text-5xl font-light tracking-[0.4em] uppercase drop-shadow-lg text-center px-4">
                     {category.title}
                 </h2>
             </div>
