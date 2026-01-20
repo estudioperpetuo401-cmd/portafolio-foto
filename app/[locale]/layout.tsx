@@ -37,7 +37,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
             // AQUÍ ESTÁ EL CAMBIO PARA OBLIGAR A FACEBOOK A VER LA NUEVA FOTO:
             images: [
                 {
-                    url: '/social-cover.jpg', // <--- Nombre nuevo
+                    url: '/social-cover.jpgjpg?v=2',
                     width: 1200,
                     height: 630,
                     alt: 'Estudio Perpetuo 401 Preview',
