@@ -10,14 +10,14 @@
             "portrait": "Retrato",
             "product": "Producto",
             "advertising": "Publicidad",
-            "move": "Move"
+            "move": "Movimiento"
         }
     },
     "About": {
         "essence": "Nuestra Esencia",
         "title": "Creando <italic>poesía visual</italic> atemporal desde 2012.",
         "bio1": "Fundado en 2012, Estudio Perpetuo 401 es más que una empresa de fotografía. Es un santuario creativo donde la luz se encuentra con la emoción. Nos especializamos en fotografía comercial, arquitectónica y editorial con un enfoque implacable en el minimalismo y el detalle de alta gama.",
-        "bio2": "Nuestra filosofía es simple: eliminar el ruido hasta que solo quede el alma del sujeto. Ya sea una campaña de alta joyería o una estructura arquitectónica minimalista, abordamos cada fotograma con precisión artística and una pasión profundamente arraigada.",
+        "bio2": "Nuestra filosofía es simple: eliminar el ruido hasta que solo quede el alma del sujeto. Ya sea una campaña de alta joyería o una estructura arquitectónica minimalista, abordamos cada fotograma con precisión artística y una pasión profundamente arraigada.",
         "cta": "Conoce nuestro proceso"
     },
     "Contact": {
@@ -53,8 +53,8 @@
         "portrait": "Retrato",
         "product": "Producto",
         "advertising": "Publicidad",
-        "intimate": "Retrato\nÍntimo",
-        "move": "Move"
+        "intimate": "Retrato Íntimo",
+        "move": "Movimiento"
     },
     "HomePage": {
         "Categories": {
@@ -63,8 +63,8 @@
             "portrait": "Retrato",
             "product": "Producto",
             "advertising": "Publicidad",
-            "intimate": "Retrato\nÍntimo",
-            "move": "Move"
+            "intimate": "Retrato Íntimo",
+            "move": "Movimiento"
         }
     }
 }

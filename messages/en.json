@@ -10,7 +10,7 @@
             "portrait": "Portrait",
             "product": "Product",
             "advertising": "Advertising",
-            "move": "Move"
+            "move": "Movement"
         }
     },
     "About": {
@@ -53,18 +53,3 @@
         "portrait": "Portrait",
         "product": "Product",
         "advertising": "Advertising",
-        "intimate": "Intimate Portrait",
-        "move": "Move"
-    },
-    "HomePage": {
-        "Categories": {
-            "social": "Social",
-            "fashion": "Fashion",
-            "portrait": "Portrait",
-            "product": "Product",
-            "advertising": "Advertising",
-            "intimate": "Intimate\nPortrait",
-            "move": "Move"
-        }
-    }
-}
