@@ -15,20 +15,35 @@ const playfair = Playfair_Display({
 });
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
-    const title = 'Fotografía Profesional en Medellín | Estudio Perpetuo 401';
-    const description = 'Portafolio de fotografía profesional en Medellín. Especialista en moda, retrato, producto y books fotográficos. Sesiones en estudio y exteriores.';
+    // Títulos y descripciones optimizados para compartir
+    const title = 'Estudio Perpetuo 401 | Fotografía Profesional';
+    const description = 'Estudio de fotografía en Medellín. Especialistas en Moda, Social, Producto, Retrato y Publicidad. Capturando momentos perpetuos.';
+    
+    // URL base de tu sitio (úsala para asegurar que las imágenes carguen bien)
+    // Si tienes dominio propio (.com), cámbialo aquí. Si no, usa el de Vercel.
+    const baseUrl = 'https://estudioperpetuo401.vercel.app'; 
 
     return {
+        metadataBase: new URL(baseUrl), // Esto ayuda a encontrar la imagen
         title,
         description,
-        keywords: ['Fotógrafo Medellín', 'Fotografía de Moda', 'Book Fotográfico', 'Estudio Perpetuo 401', 'Retratos Corporativos'],
+        keywords: ['Fotógrafo Medellín', 'Fotografía de Moda', 'Book Fotográfico', 'Estudio Perpetuo 401', 'Retratos Corporativos', 'Fotografía Social', 'Bodas Medellín'],
         openGraph: {
             title,
             description,
             type: 'website',
             locale: locale === 'es' ? 'es_CO' : 'en_US',
-            url: 'https://estudioperpetuo401.com', // Replace with actual domain if known
+            url: baseUrl,
             siteName: 'Estudio Perpetuo 401',
+            // AQUÍ ESTÁ LA CONFIGURACIÓN DE LA IMAGEN PARA WHATSAPP:
+            images: [
+                {
+                    url: '/opengraph-image.jpg', // Next.js buscará esto en la carpeta public
+                    width: 1200,
+                    height: 630,
+                    alt: 'Estudio Perpetuo 401 Preview',
+                },
+            ],
         },
     };
 }
@@ -42,11 +57,12 @@ export default async function LocaleLayout({
 }) {
     const messages = await getMessages();
 
+    // Actualizamos también el Schema para Google
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'PhotographyBusiness',
         'name': 'Estudio Perpetuo 401',
-        'image': 'https://estudioperpetuo401.com/logo.jpg',
+        'image': 'https://estudioperpetuo401.vercel.app/opengraph-image.jpg',
         'description': 'Estudio de fotografía profesional en Medellín. Especialistas en moda, retrato y producto.',
         'address': {
             '@type': 'PostalAddress',
