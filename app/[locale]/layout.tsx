@@ -15,11 +15,9 @@ const playfair = Playfair_Display({
 });
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
-    // Títulos y descripciones optimizados para compartir
     const title = 'Estudio Perpetuo 401 | Fotografía Profesional';
     const description = 'Estudio de fotografía en Medellín. Especialistas en Moda, Social, Producto, Retrato y Publicidad. Capturando momentos perpetuos.';
     
-    // URL base de tu sitio
     const baseUrl = 'https://estudioperpetuo401.vercel.app'; 
 
     return {
@@ -34,10 +32,10 @@ export async function generateMetadata({ params: { locale } }: { params: { local
             locale: locale === 'es' ? 'es_CO' : 'en_US',
             url: baseUrl,
             siteName: 'Estudio Perpetuo 401',
-            // ✅ CONFIGURACIÓN CORREGIDA:
+            // ✅ CAMBIO CLAVE: Usamos la URL absoluta que sabemos que funciona
             images: [
                 {
-                    url: '/social-cover.jpg?v=2', // Corregido: solo un .jpg y versión 2 para limpiar caché
+                    url: 'https://estudioperpetuo401.vercel.app/social-cover.jpg', 
                     width: 1200,
                     height: 630,
                     alt: 'Estudio Perpetuo 401 Preview',
@@ -56,12 +54,12 @@ export default async function LocaleLayout({
 }) {
     const messages = await getMessages();
 
-    // Actualizamos también el Schema para Google
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'PhotographyBusiness',
         'name': 'Estudio Perpetuo 401',
-        'image': 'https://estudioperpetuo401.vercel.app/social-cover.jpg', // Imagen correcta
+        // ✅ También aquí usamos la URL absoluta
+        'image': 'https://estudioperpetuo401.vercel.app/social-cover.jpg',
         'description': 'Estudio de fotografía profesional en Medellín. Especialistas en moda, retrato y producto.',
         'address': {
             '@type': 'PostalAddress',
