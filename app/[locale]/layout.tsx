@@ -19,8 +19,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
     const title = 'Estudio Perpetuo 401 | Fotografía Profesional';
     const description = 'Estudio de fotografía en Medellín. Especialistas en Moda, Social, Producto, Retrato y Publicidad. Capturando momentos perpetuos.';
     
-    // URL base de tu sitio (úsala para asegurar que las imágenes carguen bien)
-    // Si tienes dominio propio (.com), cámbialo aquí. Si no, usa el de Vercel.
+    // URL base de tu sitio
     const baseUrl = 'https://estudioperpetuo401.vercel.app'; 
 
     return {
@@ -35,10 +34,10 @@ export async function generateMetadata({ params: { locale } }: { params: { local
             locale: locale === 'es' ? 'es_CO' : 'en_US',
             url: baseUrl,
             siteName: 'Estudio Perpetuo 401',
-            // AQUÍ ESTÁ LA CONFIGURACIÓN DE LA IMAGEN PARA WHATSAPP:
+            // AQUÍ ESTÁ EL CAMBIO PARA ROMPER EL CACHÉ:
             images: [
                 {
-                    url: '/opengraph-image.jpg', // Next.js buscará esto en la carpeta public
+                    url: '/social-cover.jpg', // <--- Nombre nuevo
                     width: 1200,
                     height: 630,
                     alt: 'Estudio Perpetuo 401 Preview',
@@ -62,7 +61,7 @@ export default async function LocaleLayout({
         '@context': 'https://schema.org',
         '@type': 'PhotographyBusiness',
         'name': 'Estudio Perpetuo 401',
-        'image': 'https://estudioperpetuo401.vercel.app/opengraph-image.jpg',
+        'image': 'https://estudioperpetuo401.vercel.app/social-cover.jpg', // <--- Nombre nuevo
         'description': 'Estudio de fotografía profesional en Medellín. Especialistas en moda, retrato y producto.',
         'address': {
             '@type': 'PostalAddress',
